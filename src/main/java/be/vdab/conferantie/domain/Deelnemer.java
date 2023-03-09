@@ -1,6 +1,7 @@
 package be.vdab.conferantie.domain;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -19,7 +20,9 @@ public class Deelnemer {
         this.email = email;
     }
 
-    @JsonCreator public Deelnemer(@NotBlank @NotEmpty String voornaam, @NotBlank @NotEmpty String familienaam, @Email String email) {
+
+    @JsonCreator
+    public Deelnemer(@NotBlank @NotEmpty String voornaam, @NotBlank @NotEmpty String familienaam, @Email String email) {
         this.id = 0;
         this.voornaam = voornaam;
         this.familienaam = familienaam;
