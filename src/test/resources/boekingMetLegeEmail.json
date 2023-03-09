@@ -1,0 +1,17 @@
+{
+  "deelnemer": {
+    "voornaam": "nieuweTestVoornaam",
+    "familienaam": "nieuweTestFamilienaam",
+    "email": "  "
+  },
+  "sessies": [
+    {
+      "naam": "test1",
+      "dagId": 6666,
+      "uur": "09:00:00",
+      "sprekerid": 7777,
+      "interesses": 0,
+      "id": 8888
+    }
+  ]
+}

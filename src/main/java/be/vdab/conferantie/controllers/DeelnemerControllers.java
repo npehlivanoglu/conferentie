@@ -22,4 +22,5 @@ public class DeelnemerControllers {
     long create(@RequestBody @Valid NieuweBoeking nieuweBoeking) {
         return ticketService.boek(nieuweBoeking.deelnemer(), nieuweBoeking.sessies());
     }
+
 }

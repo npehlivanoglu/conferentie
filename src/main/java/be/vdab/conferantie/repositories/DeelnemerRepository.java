@@ -47,7 +47,6 @@ public class DeelnemerRepository {
                     select id,voornaam,familienaam,email
                     from deelnemers
                     where voornaam = ? and familienaam = ?
-                    for update
                     """;
             return Optional.of(template.queryForObject(sql, mapper, voornaamFamilienaam.voornaam(), voornaamFamilienaam.familienaam()));
         } catch (IncorrectResultSizeDataAccessException ex) {

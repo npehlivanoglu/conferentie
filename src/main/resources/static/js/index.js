@@ -1,5 +1,5 @@
 "use strict";
-import {byId, toon, verwijderChildElementenVan} from "./util.js";
+import {byId, toon, verberg, verwijderChildElementenVan} from "./util.js";
 
 setBeschikbaarTickets();
 setDatums();
@@ -16,7 +16,7 @@ async function setDatums() {
             hyperlink.href = "#";
             li.appendChild(hyperlink);
             datumsList.appendChild(li);
-            hyperlink.onclick = async function () { //Onclick start here
+            hyperlink.onclick = async function () {
                 const response = await fetch(`dagen/${datum.id}/sessies`);
                 if (response.ok) {
                     var sessies = await response.json();
@@ -49,6 +49,9 @@ async function setBeschikbaarTickets() {
     const response = await fetch("tickets");
     if (response.ok) {
         var beschikbaartickets = await response.json();
+        if (beschikbaartickets === 0) {
+            verberg("beschikbaarTickets");
+        }
         byId("beschikbaarTickets").innerText = `${beschikbaartickets} ticket(s) beschikbaar.`
     } else {
         toon("storing");

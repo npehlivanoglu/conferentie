@@ -1,5 +1,7 @@
 package be.vdab.conferantie.domain;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 import java.time.LocalTime;
 
 public class Sessie {
@@ -19,7 +21,7 @@ public class Sessie {
         this.interesses = interesses;
     }
 
-    public Sessie(String naam, long dagId, LocalTime uur, long sprekerid, int interesses) {
+    @JsonCreator public Sessie(String naam, long dagId, LocalTime uur, long sprekerid, int interesses) {
         this.id = 0;
         this.naam = naam;
         this.dagId = dagId;

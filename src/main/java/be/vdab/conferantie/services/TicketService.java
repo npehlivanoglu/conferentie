@@ -2,6 +2,7 @@ package be.vdab.conferantie.services;
 
 import be.vdab.conferantie.domain.Deelnemer;
 import be.vdab.conferantie.domain.Sessie;
+import be.vdab.conferantie.dto.DeelnemerIdSesssieId;
 import be.vdab.conferantie.dto.VoornaamFamilienaam;
 import be.vdab.conferantie.exceptions.DeelnemerIsAlBestaatException;
 import be.vdab.conferantie.exceptions.UitverkochtException;
@@ -32,6 +33,7 @@ public class TicketService {
     public int findBeschikbaarTickets() {
         return ticketRepository.findBeschikbaarTickets();
     }
+
     @Transactional
     public long boek(Deelnemer deelnemer, List<Sessie> sessies) {
         if (ticketRepository.findAndLockBeschikbaarTickets() == 0) {
@@ -42,13 +44,13 @@ public class TicketService {
             throw new DeelnemerIsAlBestaatException();
         }
         ticketRepository.boekEenticket();
-
+        var id = deelnemerRepository.create(deelnemer);
         for (var sessie : sessies) {
             sessieRepository.findAndLockById(sessie.getId());
             sessieRepository.verhoogInteressesEen(sessie.getId());
+            var voorkeur = new DeelnemerIdSesssieId(id, sessie.getId());
+            voorkeurRepository.create(voorkeur);
         }
-
-        return deelnemerRepository.create(deelnemer);
-
+        return id;
     }
 }

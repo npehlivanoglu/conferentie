@@ -39,5 +39,6 @@ function addInteressanteSessie(sessie) {
         }
 
         sessionStorage.setItem("interessanteSessies", JSON.stringify(interessanteSessies));
+        window.location = "index.html";
     };
 }

@@ -69,6 +69,6 @@ public class SessieRepository {
                 set interesses = interesses + 1
                 where id = ?
                 """;
-        template.update(sql);
+        template.update(sql,id);
     }
 }

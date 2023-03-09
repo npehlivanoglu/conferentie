@@ -53,8 +53,15 @@ async function voegBoeking(boeking) {
     });
     if (response.ok) {
         const jsonResponse = await response.json();
+        toon("bevestig");
         byId("bevestig").innerText = `Goedgekeurd. ID: ${JSON.stringify(jsonResponse)}`;
+        sessionStorage.removeItem("interessanteSessies");
     } else {
+        if (response.status === 409) {
+            const responseB = await response.json();
+            sessionStorage.setItem("conflict", responseB.message);
+            window.location = "foutpagina.html";
+        }
         toon("storing");
     }
 }

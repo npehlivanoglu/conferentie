@@ -15,18 +15,11 @@ public class VoorkeurRepository {
         this.template = template;
     }
 
-    public long create(DeelnemerIdSesssieId deelnemerIdSesssieId) {
+    public void create(DeelnemerIdSesssieId deelnemerIdSesssieId) {
         var sql = """
                 insert into deelnemervoorkeursessies(deelnemerId,sessieId)
                 values(?,?)
                 """;
-        var keyHolder = new GeneratedKeyHolder();
-        template.update(con -> {
-            var statement = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-            statement.setLong(1, deelnemerIdSesssieId.deelnemerId());
-            statement.setLong(2, deelnemerIdSesssieId.sessieId());
-            return statement;
-        }, keyHolder);
-        return keyHolder.getKey().longValue();
+        template.update(sql, deelnemerIdSesssieId.deelnemerId(), deelnemerIdSesssieId.sessieId());
     }
 }
