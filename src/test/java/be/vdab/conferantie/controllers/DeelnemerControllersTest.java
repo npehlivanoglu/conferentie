@@ -58,6 +58,7 @@ class DeelnemerControllersTest extends AbstractTransactionalJUnit4SpringContextT
         assertThat(countRowsInTableWhere(DEELNEMERS, "voornaam = 'nieuweTestVoornaam'")).isOne();
         assertThat(countRowsInTableWhere(DEELNEMERVOORKEURSESSIES, "deelnemerId =" + id + " and sessieId = " + idVanTestSessie())).isOne();
         assertThat(countRowsInTableWhere(SESSIES, "id = " + idVanTestSessie() + " and interesses = 1")).isOne();
+        assertThat(jdbcTemplate.queryForObject("select beschikbaar from tickets", long.class)).isEqualTo(99);
 
     }
 
