@@ -58,8 +58,39 @@ class DeelnemerControllersTest extends AbstractTransactionalJUnit4SpringContextT
         assertThat(countRowsInTableWhere(DEELNEMERS, "voornaam = 'nieuweTestVoornaam'")).isOne();
         assertThat(countRowsInTableWhere(DEELNEMERVOORKEURSESSIES, "deelnemerId =" + id + " and sessieId = " + idVanTestSessie())).isOne();
         assertThat(countRowsInTableWhere(SESSIES, "id = " + idVanTestSessie() + " and interesses = 1")).isOne();
-        assertThat(jdbcTemplate.queryForObject("select beschikbaar from tickets", long.class)).isEqualTo(99);
+        assertThat(jdbcTemplate.queryForObject("select beschikbaar from tickets", long.class)).isEqualTo(0);
 
+    }
+
+    @Test
+    void createMisluktBijUitverkocht() throws Exception {
+        var jsonData = Files.readString(TEST_RESOURCES.resolve("correcteBoeking.json"));
+        var jsonData2 = Files.readString(TEST_RESOURCES.resolve("correcteBoeking2.json"));
+        jsonData = vervangData(jsonData);
+        jsonData2 = vervangData(jsonData2);
+        mockMvc.perform(post("/deelnemers")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonData))
+                .andExpect(status().isOk());
+        mockMvc.perform(post("/deelnemers")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonData2))
+                .andExpect(status().isConflict());
+
+    }
+
+    @Test
+    void createMisluktBij2deKeerDezelfdeDeelnemer() throws Exception {
+        var jsonData = Files.readString(TEST_RESOURCES.resolve("correcteBoeking.json"));
+        jsonData = vervangData(jsonData);
+        mockMvc.perform(post("/deelnemers")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonData))
+                .andExpect(status().isOk());
+        mockMvc.perform(post("/deelnemers")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonData))
+                .andExpect(status().isConflict());
     }
 
     @ParameterizedTest

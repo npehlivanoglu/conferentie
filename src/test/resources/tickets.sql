@@ -1,2 +1,2 @@
 update tickets
-set beschikbaar = 100;
+set beschikbaar = 1;
