@@ -12,7 +12,11 @@ async function setDatums() {
         for (const datum of datums) {
             var li = document.createElement("li");
             var hyperlink = document.createElement("a");
-            hyperlink.innerText = datum.datum;
+            hyperlink.innerText = new Date(datum.datum).toLocaleString("nl-BE", {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            });
             hyperlink.href = "#";
             li.appendChild(hyperlink);
             datumsList.appendChild(li);
@@ -20,14 +24,19 @@ async function setDatums() {
                 const response = await fetch(`dagen/${datum.id}/sessies`);
                 if (response.ok) {
                     var sessies = await response.json();
-                    byId("datum").innerText = datum.datum;
+                    byId("datum").innerText = new Date(datum.datum).toLocaleString("nl-BE", {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric'
+                    });
                     var sessiesList = byId("sessies");
                     verwijderChildElementenVan(sessiesList);
                     for (const sessie of sessies) {
                         var li = document.createElement("li");
                         var hyperLink = document.createElement("a");
                         hyperLink.href = "sessie.html";
-                        hyperLink.innerText = `${sessie.uur} ${sessie.naam}`;
+                        var sessieUur = (sessie.uur).split(':');
+                        hyperLink.innerText = `${sessieUur[0]}:${sessieUur[1]} ${sessie.naam}`;
                         li.appendChild(hyperLink);
                         sessiesList.appendChild(li);
                         hyperLink.onclick = function () {
@@ -50,7 +59,7 @@ async function setBeschikbaarTickets() {
     if (response.ok) {
         var beschikbaartickets = await response.json();
         if (beschikbaartickets === 0) {
-            verberg("beschikbaarTickets");
+            verberg("ikWilDeelnemen");
         }
         byId("beschikbaarTickets").innerText = `${beschikbaartickets} ticket(s) beschikbaar.`
     } else {

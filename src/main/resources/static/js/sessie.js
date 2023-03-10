@@ -7,7 +7,8 @@ const response = await fetch(`sprekers/${sessie.sprekerid}`);
 if (response.ok) {
     var spreker = await response.json();
     byId("naam").innerText = sessie.naam;
-    byId("uur").innerText = sessie.uur;
+    var sessieUur = (sessie.uur).split(':');
+    byId("uur").innerText = `${sessieUur[0]}:${sessieUur[1]}`;
     byId("spreker").innerText = `${spreker.voornaam} ${spreker.familienaam}, ${spreker.titel} bij ${spreker.firma}`;
     addInteressanteSessie(sessie);
 
