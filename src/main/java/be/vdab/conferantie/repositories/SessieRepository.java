@@ -63,7 +63,7 @@ public class SessieRepository {
 
     }
 
-    public void verhoogInteressesEen(long id) {
+    public void findSessieInteressantById(long id) {
         var sql = """
                 update sessies
                 set interesses = interesses + 1

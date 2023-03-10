@@ -6,5 +6,5 @@ import jakarta.validation.Valid;
 
 import java.util.List;
 
-public record NieuweBoeking( @Valid Deelnemer deelnemer, @Valid List<Sessie> sessies) {
+public record NieuweBoeking(@Valid NieuwDeelnemer nieuwDeelnemer, @Valid List<Sessie> sessies) {
 }

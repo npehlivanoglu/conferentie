@@ -1,5 +1,6 @@
 package be.vdab.conferantie.controllers;
 
+import be.vdab.conferantie.domain.Deelnemer;
 import be.vdab.conferantie.dto.NieuweBoeking;
 import be.vdab.conferantie.services.TicketService;
 import jakarta.validation.Valid;
@@ -20,7 +21,11 @@ public class DeelnemerControllers {
 
     @PostMapping
     long create(@RequestBody @Valid NieuweBoeking nieuweBoeking) {
-        return ticketService.boek(nieuweBoeking.deelnemer(), nieuweBoeking.sessies());
+        var deelnemer = new Deelnemer(
+                nieuweBoeking.nieuwDeelnemer().voornaam(),
+                nieuweBoeking.nieuwDeelnemer().familienaam(),
+                nieuweBoeking.nieuwDeelnemer().email());
+        return ticketService.boek(deelnemer, nieuweBoeking.sessies());
     }
 
 }

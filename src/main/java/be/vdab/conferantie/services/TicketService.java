@@ -10,11 +10,11 @@ import be.vdab.conferantie.repositories.DeelnemerRepository;
 import be.vdab.conferantie.repositories.SessieRepository;
 import be.vdab.conferantie.repositories.TicketRepository;
 import be.vdab.conferantie.repositories.VoorkeurRepository;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TicketService {
@@ -35,7 +35,7 @@ public class TicketService {
     }
 
     @Transactional
-    public long boek(Deelnemer deelnemer, List<Sessie> sessies) {
+    public long boek(@Valid Deelnemer deelnemer,@Valid List<Sessie> sessies) {
         if (ticketRepository.findAndLockBeschikbaarTickets() == 0) {
             throw new UitverkochtException();
         }
@@ -47,7 +47,7 @@ public class TicketService {
         var id = deelnemerRepository.create(deelnemer);
         for (var sessie : sessies) {
             sessieRepository.findAndLockById(sessie.getId());
-            sessieRepository.verhoogInteressesEen(sessie.getId());
+            sessieRepository.findSessieInteressantById(sessie.getId());
             var voorkeur = new DeelnemerIdSesssieId(id, sessie.getId());
             voorkeurRepository.create(voorkeur);
         }

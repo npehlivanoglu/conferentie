@@ -23,17 +23,16 @@ byId("toevoegen").onclick = async function () {
         emailInput.autofocus;
         return;
     }
-    const deelnemer = {
+    const nieuwDeelnemer = {
         voornaam: voornaamInput.value,
         familienaam: familienaamInput.value,
         email: emailInput.value
     };
     const sessies = JSON.parse(sessionStorage.getItem("interessanteSessies"));
     const nieuweBoeking = {
-        deelnemer: deelnemer,
+        nieuwDeelnemer: nieuwDeelnemer,
         sessies: sessies
     };
-    console.log(JSON.stringify(nieuweBoeking));
     voegBoeking(nieuweBoeking);
 }
 
