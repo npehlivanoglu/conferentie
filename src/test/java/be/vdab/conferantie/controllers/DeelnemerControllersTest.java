@@ -58,7 +58,7 @@ class DeelnemerControllersTest extends AbstractTransactionalJUnit4SpringContextT
         assertThat(countRowsInTableWhere(DEELNEMERS, "voornaam = 'nieuweTestVoornaam'")).isOne();
         assertThat(countRowsInTableWhere(DEELNEMERVOORKEURSESSIES, "deelnemerId =" + id + " and sessieId = " + idVanTestSessie())).isOne();
         assertThat(countRowsInTableWhere(SESSIES, "id = " + idVanTestSessie() + " and interesses = 1")).isOne();
-        assertThat(jdbcTemplate.queryForObject("select beschikbaar from tickets", long.class)).isEqualTo(0);
+        assertThat(jdbcTemplate.queryForObject("select beschikbaar from tickets", long.class)).isEqualTo(1);
 
     }
 
@@ -66,8 +66,10 @@ class DeelnemerControllersTest extends AbstractTransactionalJUnit4SpringContextT
     void createMisluktBijUitverkocht() throws Exception {
         var jsonData = Files.readString(TEST_RESOURCES.resolve("correcteBoeking.json"));
         var jsonData2 = Files.readString(TEST_RESOURCES.resolve("correcteBoeking2.json"));
+        var jsonData3 = Files.readString(TEST_RESOURCES.resolve("correcteBoeking3.json"));
         jsonData = vervangData(jsonData);
         jsonData2 = vervangData(jsonData2);
+        jsonData2 = vervangData(jsonData3);
         mockMvc.perform(post("/deelnemers")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonData))
@@ -75,6 +77,10 @@ class DeelnemerControllersTest extends AbstractTransactionalJUnit4SpringContextT
         mockMvc.perform(post("/deelnemers")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonData2))
+                .andExpect(status().isOk());
+        mockMvc.perform(post("/deelnemers")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonData3))
                 .andExpect(status().isConflict());
 
     }
