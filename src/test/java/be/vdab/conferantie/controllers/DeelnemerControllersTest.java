@@ -20,10 +20,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 @SpringBootTest
-@Sql({"/dagen.sql", "/sprekers.sql", "/sessies.sql", "/deelnemers.sql", "/deelnemervoorkeursessies.sql"})
+@Sql({"/tickets.sql", "/dagen.sql", "/sprekers.sql", "/sessies.sql", "/deelnemers.sql", "/deelnemervoorkeursessies.sql"})
 @AutoConfigureMockMvc
 class DeelnemerControllersTest extends AbstractTransactionalJUnit4SpringContextTests {
     private final static Path TEST_RESOURCES = Path.of("src/test/resources");
+    private final static String TICKETS = "tickets";
     private final static String DAGEN = "dagen";
     private final static String SESSIES = "sessies";
     private final static String DEELNEMERS = "deelnemers";
