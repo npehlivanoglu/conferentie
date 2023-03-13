@@ -25,7 +25,7 @@ public class DeelnemerControllers {
                 nieuweBoeking.nieuwDeelnemer().voornaam(),
                 nieuweBoeking.nieuwDeelnemer().familienaam(),
                 nieuweBoeking.nieuwDeelnemer().email());
-        return ticketService.boek(deelnemer, nieuweBoeking.sessies());
+        return ticketService.boek(deelnemer, nieuweBoeking.sessieIDs());
     }
 
 }

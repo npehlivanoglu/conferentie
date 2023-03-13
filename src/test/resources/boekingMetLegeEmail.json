@@ -4,10 +4,7 @@
     "familienaam": "nieuweTestFamilienaam",
     "email": "  "
   },
-  "sessies": [
-    {
-      "naam": "test1",
-      "id": 8888
-    }
+  "sessieIDs": [
+    8888
   ]
 }

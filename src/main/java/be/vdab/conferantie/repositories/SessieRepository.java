@@ -63,12 +63,13 @@ public class SessieRepository {
 
     }
 
-    public void findSessieInteressantById(long id) {
+    public void verhoogInteresseById(long id) {
         var sql = """
                 update sessies
                 set interesses = interesses + 1
                 where id = ?
                 """;
-        template.update(sql,id);
+        template.update(sql, id);
     }
+
 }

@@ -35,7 +35,7 @@ public class TicketService {
     }
 
     @Transactional
-    public long boek(@Valid Deelnemer deelnemer,@Valid List<Sessie> sessies) {
+    public long boek(@Valid Deelnemer deelnemer, @Valid List<Long> sessieIDs) {
         if (ticketRepository.findAndLockBeschikbaarTickets() == 0) {
             throw new UitverkochtException();
         }
@@ -45,10 +45,9 @@ public class TicketService {
         }
         ticketRepository.boekEenticket();
         var id = deelnemerRepository.create(deelnemer);
-        for (var sessie : sessies) {
-            sessieRepository.findAndLockById(sessie.getId());
-            sessieRepository.findSessieInteressantById(sessie.getId());
-            var voorkeur = new DeelnemerIdSesssieId(id, sessie.getId());
+        for (var sessieID : sessieIDs) {
+            sessieRepository.verhoogInteresseById(sessieID);
+            var voorkeur = new DeelnemerIdSesssieId(id, sessieID);
             voorkeurRepository.create(voorkeur);
         }
         return id;

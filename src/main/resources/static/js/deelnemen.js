@@ -31,8 +31,9 @@ byId("toevoegen").onclick = async function () {
     const sessies = JSON.parse(sessionStorage.getItem("interessanteSessies"));
     const nieuweBoeking = {
         nieuwDeelnemer: nieuwDeelnemer,
-        sessies: sessies
+        sessieIDs: sessies.map(sessie => sessie.id)
     };
+    console.log(nieuweBoeking);
     voegBoeking(nieuweBoeking);
 }
 
