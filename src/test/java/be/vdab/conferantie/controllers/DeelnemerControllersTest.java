@@ -111,8 +111,6 @@ class DeelnemerControllersTest extends AbstractTransactionalJUnit4SpringContextT
     }
 
     private String vervangData(String jsonData) {
-        jsonData = jsonData.replaceAll("6666", String.valueOf(idVanTestDag()));
-        jsonData = jsonData.replaceAll("7777", String.valueOf(idVanTestSpreker()));
         jsonData = jsonData.replaceAll("8888", String.valueOf(idVanTestSessie()));
         return jsonData;
     }

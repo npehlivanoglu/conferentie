@@ -14,7 +14,7 @@ if (response.ok) {
 
 
     let interessanteSessies = JSON.parse(sessionStorage.getItem("interessanteSessies"));
-    if (interessanteSessies !== null && interessanteSessies.some(s => s.naam === sessie.naam && s.uur === sessie.uur)) {
+    if (interessanteSessies !== null && interessanteSessies.some(s => s.id === sessie.id)) {
         byId("interessant").innerText = "Geen interesse meer";
     }
 
@@ -30,12 +30,16 @@ function addInteressanteSessie(sessie) {
         }
 
 
-        let index = interessanteSessies.findIndex(s => s.naam === sessie.naam && s.uur === sessie.uur);
+        let index = interessanteSessies.findIndex(s => s.id === sessie.id);
         if (index !== -1) {
             interessanteSessies.splice(index, 1);
             byId("interessant").innerText = "Interessant";
         } else {
-            interessanteSessies.push(sessie);
+            var sessieIdEnNaam = {
+                id: sessie.id,
+                naam: sessie.naam
+            };
+            interessanteSessies.push(sessieIdEnNaam);
             byId("interessant").innerText = "Geen interesse meer";
         }
 
